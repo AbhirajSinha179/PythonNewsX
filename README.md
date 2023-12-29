@@ -1,8 +1,8 @@
-# News Synthesis Project
+# News X Project
 
 ## Overview
 
-The News Synthesis Project is an ambitious endeavor that automates the transformation of news articles into engaging video content. It leverages cutting-edge technologies, including web scraping, OpenAI's GPT API for text summarization, and deepfake models from Hugging Face for avatar lipsyncing. The result is a dynamic and visually compelling news presentation that combines natural language processing with AI-generated visuals.
+The News X Project is an ambitious endeavor that automates the transformation of news articles into engaging video content. It leverages cutting-edge technologies, including web news APIs, BERT Extractive Summarizer for text summarization, Elevenlabs API for text to speech, and Wav2Lip for avatar lipsyncing. The result is a dynamic and visually compelling news presentation that combines natural language processing with AI-generated visuals.
 
 ## Components
 
