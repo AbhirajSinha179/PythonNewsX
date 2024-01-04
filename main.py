@@ -18,12 +18,13 @@ import os
 from dotenv import load_dotenv
 import json
 from summarizer import Summarizer
-
+# youtube upload api
+from youtube_upload.client import YoutubeUploader
 load_dotenv()
 
 CHUNK_SIZE=1024
 # Text-to-speech, audio saved to output.mp3 at root level of the directory,, to be used for text-to-avatar
-def makeAudio(summarizedcontent):
+def make_audio(summarizedcontent):
 
     key = os.getenv("ELEVENLABS_API_KEY")
     # voice ID of american ground news reporter
@@ -53,7 +54,7 @@ def makeAudio(summarizedcontent):
 
 
 # Summarizing text
-def summarizedNews(text):
+def summarized_news(text):
     # bert model summarizer
     model = Summarizer()
     # need to make sure ratio is not getting neglected,
@@ -64,7 +65,7 @@ def summarizedNews(text):
 
 
 # calling news API and getting the content of a sample news article (ex: on blockchain)
-def getNews():
+def get_news():
     key = os.getenv("NEWS_API_KEY")
     url = "https://newsdata.io/api/1/news?"
 
@@ -89,13 +90,35 @@ def getNews():
     # returning the articles dict
     return articles
 
+def upload_video(file_path):
+
+    uploader = YoutubeUploader(secrets_file_path="./client_secret_610949113764-emvq9t18ac0sg7qr614dou9d9tng000l.apps.googleusercontent.com.json")
+    uploader.authenticate() # use access token and refresh token here in parameters
+    # Video options
+    options = {
+        "title": "Automated uploading video to YouTube",  # Video title
+        "description": "Sample upload to YT via Python",  # Video description
+        "tags": ["news", "india", "recent"],
+        "categoryId": "22",
+        "privacyStatus": "private",  # Video privacy. Can either be "public", "private", or "unlisted"
+        "kids": False,  # Specifies if the Video if for kids or not. Defaults to False.
+        # "thumbnailLink": "https://cdn.havecamerawilltravel.com/photographer/files/2020/01/youtube-logo-new-1068x510.jpg"
+        # Optional. Specifies video thumbnail.
+    }
+
+    # upload video
+    uploader.upload(file_path, options)
+
 def main():
-    # get the dict of articles
-    news_articles = getNews()
-    # summarizing topmost article
-    summ = summarizedNews(news_articles[0]['content'])
-    # text to speech audio generated
-    makeAudio(summ)
+    # # get the dict of articles
+    # news_articles = get_news()
+    # # summarizing topmost article
+    # summ = summarized_news(news_articles[0]['content'])
+    # # text to speech audio generated
+    # make_audio(summ)
+
+    file_path = "./sample_vid.mp4"
+    upload_video(file_path)
 
 if __name__ == '__main__':
     main()
